@@ -25,6 +25,7 @@ class ItemsBloc extends Bloc<ItemsEvent, ItemsState> {
   Stream<ItemsState> _mapLoadItemsToState() async* {
     try {
       final items = await this.itemsRepository.getItems();
+
       yield ItemsLoaded(
         items,
       );

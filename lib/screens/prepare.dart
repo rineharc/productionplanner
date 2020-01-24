@@ -10,19 +10,15 @@ class PrepareScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Scaffold(
+    return Scaffold(
       body: Column(
         children: <Widget>[
           SearchBar(),
           FilterChips(),
-          // PrepareItem(),
-          // PrepareItem(),
-          // PrepareItem(),
           PrepareList(),
         ],
       ),
       bottomNavigationBar: BottomNavigation(),
-    ));
+    );
   }
 }

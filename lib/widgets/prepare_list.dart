@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutterweb/data/items_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterweb/blocs/blocs.dart';
 import 'package:flutterweb/models/item.dart';
+import 'package:flutterweb/widgets/prepare_item.dart';
 
 class PrepareList extends StatelessWidget {
   const PrepareList({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var repo = ItemsRepository();
-    return Expanded(
-      child: FutureBuilder(
-        future: repo.getItems(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              snapshot.hasData == null) {
-            return Container();
-          }
-          List<Item> items = snapshot.data;
-          return ListView.builder(
+    return BlocBuilder<ItemsBloc, ItemsState>(builder: (context, state) {
+      if (state is ItemsLoading) {
+        return Expanded(child: Center(child: CircularProgressIndicator()));
+      } else if (state is ItemsLoaded) {
+        List<Item> items = state.items;
+        return Expanded(
+          child: ListView.builder(
             itemCount: items?.length ?? 0,
             itemBuilder: (context, index) {
               return Column(
                 children: <Widget>[
-                  Text(items[index].upc),
+                  PrepareItem(),
+                  //Text(items[index].upc),
                 ],
               );
             },
-          );
-        },
-      ),
-    );
+          ),
+        );
+      } else if (state is ItemsNotLoaded) {
+        return Text("Items Not Loaded");
+      }
+    });
   }
 }

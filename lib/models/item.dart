@@ -11,7 +11,7 @@ class Item extends Equatable {
   final int forecastQty;
   final int producedQty;
 
-  Item(
+  Item({
     this.store,
     this.upc,
     this.description,
@@ -21,8 +21,8 @@ class Item extends Equatable {
     this.inventoryQty,
     this.forecastQty,
     this.producedQty,
-  );
+  });
 
   @override
-  List<Object> get props => [upc];
+  List<Object> get props => [upc, store];
 }
